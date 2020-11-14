@@ -1,8 +1,6 @@
 
 
 
-
-
 import 'dart:convert';
 // import 'dart:html';
 
@@ -17,8 +15,8 @@ part 'todos_state.freezed.dart';
 
 
 @freezed
-abstract class TodosState with _$TodosState  {
-  const factory TodosState( {//TodosStateのクラスをチェック
+abstract class TodosState with _$TodosState {
+  const factory TodosState({//TodosStateのクラスをチェック
     @Default(<Todo>[]) List<Todo> todos,//すべてのTodoが入るtodos
   }) = TodosStateData;//TodosStateDataであればデータの読み込みが終わったという判断ができるように
   const factory TodosState.loading() = TodosStateLoading;//TodosStateLoadingであればまだ読み込み中
@@ -35,12 +33,11 @@ class TodosController extends StateNotifier<TodosState> with LocatorMixin  {
     super.initState();
     await Future<void>.delayed(const Duration(seconds: 3));//initStateで3秒間ウエイトを入れ,初期データとしていくつかのTodoをstateへ設定
     // 初期データを設定、TodosStateLoadingからTodoStateDataへ変わるのでローディング完了の状態となる
+
     var prefs = await SharedPreferences.getInstance();
 
     final todosJson = prefs.getString('todos');
     final todos = json.decode(todosJson).map<Todo>((json) => Todo.fromJson(json)).toList();
-
-    // var prefs = await SharedPreferences.getInstance();
 
     if (todos == null) {
       state = TodosStateData(

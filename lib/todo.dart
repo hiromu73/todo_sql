@@ -15,6 +15,7 @@ abstract class Todo with _$Todo {
     @Default(false) bool completed,//@Defaultで初期値を与えるpage=0ではない
   }) = TodoData;
 
+//キーに対して上書きする事しかできないので、Jsonなどにシリアライズして保存する
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
-
+  // Map<String, dynamic> toJson() => _$_$TodoDataToJson(this);
 }
